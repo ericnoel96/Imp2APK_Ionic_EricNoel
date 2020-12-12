@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Departamentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content padding>
+ 
+  <ion-segment [(ngModel)]="selectedView">
+    <ion-segment-button value="departamentos">
+      <ion-label>Departamento</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="empleados">
+      <ion-label>empleados</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+ 
+  <div [ngSwitch]="selectedView" (ionChange)="searchChanged($event)">
+    <div *ngSwitchCase="'departamentos'" >
+      <ion-item>
+        <ion-label position="stacked">Nombre del departamento</ion-label>
+        <ion-input [(ngModel)]="departamento.nombre" placeholder="Nombre de Departamento"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="addDepartamento()">Añadir Departamento</ion-button>
+ 
+      <ion-list>
+        <ion-item button *ngFor="let dep of departamentos" [routerLink]="['/', 'departamento', dep.id]">
+          <ion-label>
+            <h2>{{ dep.nombre }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+ 
+    <div *ngSwitchCase="'empleados'">
+      <ion-item>
+        <ion-label position="stacked">Nombre del Empleado</ion-label>
+        <ion-input [(ngModel)]="empleado.nombre" placeholder="Nombre"></ion-input>        
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Sueldo del Empleado</ion-label>
+        <ion-input type="number" [(ngModel)]="empleado.sueldo" placeholder="Sueldo"></ion-input>        
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Departamento</ion-label>
+        <ion-select [(ngModel)]="empleado.deparID">
+          <ion-select-option *ngFor="let dep of departamentos" [value]="dep.id">{{ dep.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="block" (click)="addEmpleado()">Añadir Empleado</ion-button>
+ 
+      <ion-list>
+        <ion-item *ngFor="let emp of empleados | async">
+          <ion-label>
+            <h2>{{ emp.nombre }}</h2>
+            <p>ID: {{emp.id}}</p>
+            <p>Sueldo: {{emp.sueldo}}</p>
+            <p>Departamento: {{ emp.departamento }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+ 
+</ion-content>

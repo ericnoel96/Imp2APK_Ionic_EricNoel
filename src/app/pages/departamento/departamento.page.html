@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="developers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Departamento</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="delete()">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content padding>
+  <div *ngIf="departamento">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="departamento.nombre" placeholder="Nombre Depar"></ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="updateDeveloper()">Actualizar información</ion-button>
+    <h2>Datos del departamento: {{departamento.nombre}}</h2>
+    <h3>Empleados:</h3>
+    <ion-list>
+      <ion-item *ngFor="let emp of empleados">
+        <ion-label>
+          <p>{{ emp.nombre }}</p>
+          <p>${{ emp.sueldo }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <h3>Presupuesto para los sueldos del departamento:</h3>
+    <p>${{ sueldoTotal }}</p>
+  </div>
+</ion-content>
